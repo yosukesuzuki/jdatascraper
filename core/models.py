@@ -20,5 +20,4 @@ class GameResult(db.Model):
     away_team = db.StringProperty(required=True)
     home_shoot = db.IntegerProperty(default=0)
     away_shoot = db.IntegerProperty(default=0)
-
     created_at = db.DateTimeProperty(auto_now_add=True)
