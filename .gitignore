@@ -61,3 +61,10 @@ coverage.xml
 *.DS_Store
 # PyBuilder
 target/
+
+# vim
+*~
+*.swp
+
+# pycharm
+.idea/*
