@@ -11,7 +11,7 @@ def get_game_id(year):
     for i in range(3, 13):
         url = 'https://data.j-league.or.jp/SFMS01/search?' \
               + 'competition_years=' + str(year) \
-              + '&competition_frame_ids=1&competition_frame_ids=&' \
+              + '&competition_frame_ids=1&competition_frame_ids=2&' \
               + 'section_months=' + str(i)
         html_string = unicode(urlfetch.fetch(url=url, deadline=60).content, 'utf-8')
         query = pq(html_string)
