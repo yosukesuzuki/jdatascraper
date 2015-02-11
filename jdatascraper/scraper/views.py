@@ -2,9 +2,10 @@
 
 from google.appengine.ext import db
 
-from kay.utils import render_to_response
+from kay.utils import render_to_response, render_json_response
 
 from core.models import GameId
+from scraper.scrap import get_game_id
 
 
 def save_game_id(game_ids):
@@ -16,3 +17,8 @@ def save_game_id(game_ids):
 
 def index(request):
     return render_to_response('scraper/index.html', {'message': 'Hello'})
+
+
+def get_and_save_game_id(request):
+    save_game_id(get_game_id(2014))
+    return render_json_response({'status': 'done'})

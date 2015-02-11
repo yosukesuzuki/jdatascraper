@@ -6,5 +6,6 @@ from kay.routing import (
 view_groups = [
     ViewGroup(
         Rule('/', endpoint='index', view='scraper.views.index'),
+        Rule('/gameid', endpoint='get_and_save_game_id', view='scraper.views.get_and_save_game_id'),
     )
 ]

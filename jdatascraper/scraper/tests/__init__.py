@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from kay.ext.testutils.gae_test_base import GAETestBase
-from scraper.scraper import get_game_id
-from scraper.views import save_game_id
-from core.models import GameId
+from scraper.scrap import get_game_id, scrap_game_data
+from scraper.game_data import test_game_data
+# from scraper.views import save_game_id
+# from core.models import GameId
 
 
 class GetGameIDTest(GAETestBase):
@@ -15,6 +16,7 @@ class GetGameIDTest(GAETestBase):
         self.assertEquals(game_ids[0], '15671')
 
 
+'''
 class SaveGameIDTest(GAETestBase):
     CLEANUP_USED_KIND = True
     USE_PRODUCTION_STUBS = True
@@ -26,3 +28,13 @@ class SaveGameIDTest(GAETestBase):
         self.assertEquals(game_id_object.game_id, '15671')
         game_count = GameId.all().count(limit=5000)
         self.assertEquals(game_count, 768)
+'''
+
+
+class ScrapGameDataTest(GAETestBase):
+    CLEANUP_USED_KIND = True
+    USE_PRODUCTION_STUBS = True
+
+    def test_scrap_game_data(self):
+        result = scrap_game_data(test_game_data)
+        self.assertEquals(result['series_number'], 1)
