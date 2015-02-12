@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from kay.ext.testutils.gae_test_base import GAETestBase
 from scraper.scrap import get_game_id, scrap_game_data
 from scraper.game_data import test_game_data
@@ -42,3 +44,7 @@ class ScrapGameDataTest(GAETestBase):
         self.assertEquals(result['home_start_member'].split(',')[-1], u'フォルラン')
         self.assertEquals(result['away_start_member'].split(',')[0], u'林　卓人')
         self.assertEquals(result['away_start_member'].split(',')[-1], u'佐藤　寿人')
+        self.assertEquals(result['game_start_at'], datetime.datetime.strptime('2014/03/01 14:04', '%Y/%m/%d %H:%M'))
+        self.assertEquals(result['weather'], u'雨')
+        self.assertEquals(result['temperature'], 12.3)
+        self.assertEquals(result['referee'], u'家本　政明')

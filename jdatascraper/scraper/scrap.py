@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import datetime
 from google.appengine.api import urlfetch
 
 from pyquery import PyQuery as pq
@@ -48,6 +49,12 @@ def scrap_game_data(html_string):
         # import pdb; pdb.set_trace()
         away_start_member_arr.append(pq(start_m).text())
     away_start_member = u','.join(away_start_member_arr)
+    meta_infos = query('div.two-column-table-bottom table tbody tr:first-child td')
+    game_start_at = datetime.datetime.strptime(pq(meta_infos[0]).text() + ' ' + pq(meta_infos[1]).text(),
+                                               '%Y/%m/%d %H:%M')
+    weather = pq(meta_infos[4]).text()
+    temperature = float(pq(meta_infos[5]).text())
+    refereee = pq(query('div.clearbox dl dd')[0]).text()
     return {
         'series_number': series_number,
         'home_team': home_team,
@@ -61,4 +68,8 @@ def scrap_game_data(html_string):
         'away_shoot': away_shoot,
         'home_start_member': home_start_member,
         'away_start_member': away_start_member,
+        'game_start_at': game_start_at,
+        'weather': weather,
+        'temperature': temperature,
+        'referee': refereee,
     }
