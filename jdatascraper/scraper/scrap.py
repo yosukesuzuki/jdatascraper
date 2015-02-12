@@ -54,7 +54,7 @@ def scrap_game_data(html_string):
                                                '%Y/%m/%d %H:%M')
     weather = pq(meta_infos[4]).text()
     temperature = float(pq(meta_infos[5]).text())
-    refereee = pq(query('div.clearbox dl dd')[0]).text()
+    referee = pq(query('div.clearbox dl dd')[0]).text()
     return {
         'series_number': series_number,
         'home_team': home_team,
@@ -71,5 +71,5 @@ def scrap_game_data(html_string):
         'game_start_at': game_start_at,
         'weather': weather,
         'temperature': temperature,
-        'referee': refereee,
+        'referee': referee,
     }

@@ -15,7 +15,6 @@ class GameId(db.Model):
 
 
 class GameResult(db.Model):
-    result = db.StringProperty(required=True, choices=('home_win', 'draw', 'away_win'))
     teams = db.StringListProperty()
     series_number = db.IntegerProperty()
     home_team = db.StringProperty(required=True)
@@ -33,3 +32,12 @@ class GameResult(db.Model):
     temperature = db.FloatProperty()
     referee = db.StringProperty(required=True)
     created_at = db.DateTimeProperty(auto_now_add=True)
+
+    @property
+    def result(self):
+        if self.home_score > self.away_score:
+            return 'home_win'
+        if self.home_score == self.away_score:
+            return 'draw'
+        if self.home_score < self.away_score:
+            return 'away_win'

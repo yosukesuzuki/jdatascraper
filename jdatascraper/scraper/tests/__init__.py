@@ -5,8 +5,8 @@ import datetime
 from kay.ext.testutils.gae_test_base import GAETestBase
 from scraper.scrap import get_game_id, scrap_game_data
 from scraper.game_data import test_game_data
-from scraper.views import save_game_id
-from core.models import GameId
+from scraper.views import save_game_id, save_game_result
+from core.models import GameId, GameResult
 
 
 class GetGameIDTest(GAETestBase):
@@ -48,3 +48,7 @@ class ScrapGameDataTest(GAETestBase):
         self.assertEquals(result['weather'], u'雨')
         self.assertEquals(result['temperature'], 12.3)
         self.assertEquals(result['referee'], u'家本　政明')
+        result['game_id'] = '15671'
+        save_game_result([result])
+        game_result_15671 = GameResult.get_by_key_name('15671')
+        self.assertEquals(game_result_15671.home_team, u'セレッソ大阪')
