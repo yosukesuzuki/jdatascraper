@@ -16,6 +16,7 @@ class GameId(db.Model):
 
 class GameResult(db.Model):
     teams = db.StringListProperty()
+    division = db.IntegerProperty()
     series_number = db.IntegerProperty()
     home_team = db.StringProperty(required=True)
     away_team = db.StringProperty(required=True)

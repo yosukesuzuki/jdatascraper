@@ -27,14 +27,16 @@ def get_game_id(year):
 def scrap_game_data(html_string):
     query = pq(unicode(html_string))
     title_text = pq(query('p.t-txt')[0]).text()
-    series_number_str = re.search(ur'第([１２３４５６７８９０0-9])節', title_text).group(1)
+    division_str = re.search(ur'ディビジョン([１２３４５６７８９０0-9]+)', title_text).group(1)
+    division = int(z2h(division_str, 2).encode("euc-jp"))
+    series_number_str = re.search(ur'第([１２３４５６７８９０0-9]+)節', title_text).group(1)
     # import pdb; pdb.set_trace()
     series_number = int(z2h(series_number_str, 2).encode("euc-jp"))
     home_team = pq(query('#team-name-l')[0]).text()
     away_team = pq(query('#team-name-r')[0]).text()
     teams = [home_team, away_team]
-    home_director = pq(query('div.two-column-table-base')[8]).text()
-    away_director = pq(query('div.two-column-table-base')[9]).text()
+    home_director = pq(query('div.two-column-table-base')[-2]).text()
+    away_director = pq(query('div.two-column-table-base')[-1]).text()
     home_score = int(pq(query('td.score')[0]).text())
     away_score = int(pq(query('td.score')[1]).text())
     home_shoot = int(pq(query('div.left-score')[0]).text())
@@ -56,6 +58,7 @@ def scrap_game_data(html_string):
     temperature = float(pq(meta_infos[5]).text())
     referee = pq(query('div.clearbox dl dd')[0]).text()
     return {
+        'division': division,
         'series_number': series_number,
         'home_team': home_team,
         'away_team': away_team,
