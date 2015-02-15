@@ -6,7 +6,7 @@ import datetime
 from kay.ext.testutils.gae_test_base import GAETestBase
 from scraper.scrap import get_game_id, scrap_game_data
 from scraper.game_data import test_game_data, test_data_2014
-from scraper.views import save_game_id, save_game_result
+from scraper.views import save_game_id, save_game_result, set_stats
 from core.models import GameId, GameResult
 
 
@@ -68,3 +68,35 @@ class SetStatsDataTest(GAETestBase):
             game_result.put()
         game_count = GameResult.all().count(1000)
         self.assertEquals(game_count, 768)
+        set_stats('15716')
+        game_result = GameResult.get_by_key_name('15716')
+        self.assertEquals(game_result.away_win_last5, 2)
+        self.assertEquals(game_result.away_win_last3, 2)
+        self.assertEquals(game_result.away_win_last1, 1)
+        self.assertEquals(game_result.away_draw_last5, 1)
+        self.assertEquals(game_result.away_draw_last3, 0)
+        self.assertEquals(game_result.away_draw_last1, 0)
+        self.assertEquals(game_result.away_lost_last5, 2)
+        self.assertEquals(game_result.away_lost_last3, 1)
+        self.assertEquals(game_result.away_lost_last1, 0)
+        self.assertEquals(game_result.away_score_last5, 11)
+        self.assertEquals(game_result.away_score_last3, 8)
+        self.assertEquals(game_result.away_score_last1, 1)
+        self.assertEquals(game_result.away_shoot_last5, 70)
+        self.assertEquals(game_result.away_shoot_last3, 48)
+        self.assertEquals(game_result.away_shoot_last1, 12)
+        self.assertEquals(game_result.home_win_last5, 0)
+        self.assertEquals(game_result.home_win_last3, 0)
+        self.assertEquals(game_result.home_win_last1, 0)
+        self.assertEquals(game_result.home_draw_last5, 0)
+        self.assertEquals(game_result.home_draw_last3, 0)
+        self.assertEquals(game_result.home_draw_last1, 0)
+        self.assertEquals(game_result.home_lost_last5, 5)
+        self.assertEquals(game_result.home_lost_last3, 3)
+        self.assertEquals(game_result.home_lost_last1, 1)
+        self.assertEquals(game_result.home_score_last5, 1)
+        self.assertEquals(game_result.home_score_last3, 1)
+        self.assertEquals(game_result.home_score_last1, 1)
+        self.assertEquals(game_result.home_shoot_last5, 25)
+        self.assertEquals(game_result.home_shoot_last3, 17)
+        self.assertEquals(game_result.home_shoot_last1, 9)
