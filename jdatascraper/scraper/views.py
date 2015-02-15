@@ -20,11 +20,10 @@ def save_game_id(game_ids):
 
 
 def save_game_result(game_results):
-    game_result_objects = []
     for game_result in game_results:
         # import pdb; pdb.set_trace()
-        game_result_objects.append(GameResult(key_name=game_result['game_id'], **game_result))
-    db.put(game_result_objects)
+        entity = GameResult(key_name=game_result['game_id'], **game_result)
+        entity.put()
 
 
 def index(request):
@@ -73,4 +72,4 @@ def all_json(request):
             'referee': r.referee,
             'game_id': r.key().name(),
         })
-    return render_json_response(return_data, mimetype='application/json')
+    return render_json_response(return_data)

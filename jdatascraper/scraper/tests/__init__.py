@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import json
 import datetime
 
 from kay.ext.testutils.gae_test_base import GAETestBase
 from scraper.scrap import get_game_id, scrap_game_data
-from scraper.game_data import test_game_data
+from scraper.game_data import test_game_data, test_data_2014
 from scraper.views import save_game_id, save_game_result
 from core.models import GameId, GameResult
 
@@ -52,3 +53,18 @@ class ScrapGameDataTest(GAETestBase):
         save_game_result([result])
         game_result_15671 = GameResult.get_by_key_name('15671')
         self.assertEquals(game_result_15671.home_team, u'セレッソ大阪')
+
+
+class SetStatsDataTest(GAETestBase):
+    CLEANUP_USED_KIND = True
+    USE_PRODUCTION_STUBS = True
+
+    def test_stats_data(self):
+        all_game_data = json.loads(test_data_2014)
+        for game in all_game_data:
+            game['game_start_at'] = datetime.datetime.strptime(game['game_start_at'], '%Y/%m/%d %H:%M')
+            game['temperature'] = float(game['temperature'])
+            game_result = GameResult(key_name=game['game_id'], **game)
+            game_result.put()
+        game_count = GameResult.all().count(1000)
+        self.assertEquals(game_count, 768)
