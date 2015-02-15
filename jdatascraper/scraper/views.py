@@ -49,6 +49,12 @@ def get_and_save_game_result(request):
     return render_json_response({'status': 'done'})
 
 
+def set_game_stats(request):
+    for entity in GameId.all().fetch(1000):
+        set_latest_stats(entity.key().name())
+    return render_json_response({'status': 'done'})
+
+
 def all_json(request):
     results = GameResult.all().order('game_start_at').fetch(1000)
     return_data = []
@@ -75,7 +81,7 @@ def all_json(request):
     return render_json_response(return_data)
 
 
-def set_stats(game_id):
+def set_latest_stats(game_id):
     game_result = GameResult.get_by_key_name(game_id)
     home_team_results = GameResult.all().filter(
         u'teams =', game_result.home_team).filter(u'game_start_at <', game_result.game_start_at).order(
