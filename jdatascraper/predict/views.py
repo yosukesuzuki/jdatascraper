@@ -24,11 +24,14 @@ from kay.i18n import gettext as _
 from kay.auth.decorators import login_required
 
 """
-
+from werkzeug import Response
 from kay.utils import render_to_response
 
 
 # Create your views here.
 
+def output_csv(request, series_number):
+    results = GameResult.all().order('game_start_at').fetch(1000)
+
 def index(request):
-  return render_to_response('predict/index.html', {'message': 'Hello'})
+    return render_to_response('predict/index.html', {'message': 'Hello'})

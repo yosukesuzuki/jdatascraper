@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Top Page - scraper</title>
+</head>
+<body>
+results,series_number,game_start_at,weather,temperature,referee,home_team,away_team,home_director,away_director,home_start_member,away_start_member,
+home_score_last5,away_score_last5,home_score_last3,away_score_last3,home_score_last1,away_score_last1,
+home_shoot_last5,away_shoot_last5,home_shoot_last3,away_shoot_last3,home_shoot_last1,away_shoot_last1,
+home_win_last5,away_win_last5,home_win_last3,away_win_last3,home_win_last1,away_win_last1,
+home_draw_last5,away_draw_last5,home_draw_last3,away_draw_last3,home_draw_last1,away_draw_last1,
+home_lost_last5,away_lost_last5,home_lost_last3,away_lost_last3,home_lost_last1,away_lost_last1<br/>
+{% for data in all_data %}
+"{{ data['result'] }}",
+{{ data['series_number'] }},
+"{{ data['game_start_at'] }}",
+"{{ data['weather'] }}",
+{{ data['temperature'] }},
+"{{ data['referee'] }}",
+"{{ data['home_team'] }}",
+"{{ data['away_team'] }}",
+"{{ data['home_director'] }}",
+"{{ data['away_director'] }}",
+"{{ data['home_start_member'] }}",
+"{{ data['away_start_member'] }}",
+{{ data['home_score_last5'] }},
+{{ data['away_score_last5'] }},
+{{ data['home_score_last3'] }},
+{{ data['away_score_last3'] }},
+{{ data['home_score_last1'] }},
+{{ data['away_score_last1'] }},
+{{ data['home_shoot_last5'] }},
+{{ data['away_shoot_last5'] }},
+{{ data['home_shoot_last3'] }},
+{{ data['away_shoot_last3'] }},
+{{ data['home_shoot_last1'] }},
+{{ data['away_shoot_last1'] }},
+{{ data['home_win_last5'] }},
+{{ data['away_win_last5'] }},
+{{ data['home_win_last3'] }},
+{{ data['away_win_last3'] }},
+{{ data['home_win_last1'] }},
+{{ data['away_win_last1'] }},
+{{ data['home_draw_last5'] }},
+{{ data['away_draw_last5'] }},
+{{ data['home_draw_last3'] }},
+{{ data['away_draw_last3'] }},
+{{ data['home_draw_last1'] }},
+{{ data['away_draw_last1'] }},
+{{ data['home_lost_last5'] }},
+{{ data['away_lost_last5'] }},
+{{ data['home_lost_last3'] }},
+{{ data['away_lost_last3'] }},
+{{ data['home_lost_last1'] }},
+{{ data['away_lost_last1'] }}<br/>
+{% endfor %}
+</body>
+</html>

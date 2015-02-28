@@ -3,6 +3,7 @@
 import logging
 import datetime
 
+from werkzeug import Response
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 
@@ -55,15 +56,73 @@ def set_game_stats(request):
     return render_json_response({'status': 'done'})
 
 
+def all_csv(request):
+    results = GameResult.all().order('game_start_at').fetch(1000)
+    return_data = []
+    for r in results:
+        return_data.append({
+            'result': r.result,
+            'series_number': r.series_number,
+            'home_team': r.home_team,
+            'away_team': r.away_team,
+            # 'teams': r.teams,
+            'home_director': r.home_director,
+            'away_director': r.away_director,
+            'home_score': r.home_score,
+            'away_score': r.away_score,
+            'home_shoot': r.home_shoot,
+            'away_shoot': r.away_shoot,
+            'home_start_member': r.home_start_member,
+            'away_start_member': r.away_start_member,
+            'game_start_at': datetime.datetime.strftime(r.game_start_at, '%Y/%m/%d %H:%M'),
+            'weather': r.weather,
+            'temperature': r.temperature,
+            'referee': r.referee,
+            'game_id': r.key().name(),
+            'home_score_last1': r.home_score_last1,
+            'away_score_last1': r.away_score_last1,
+            'home_score_last3': r.home_score_last3,
+            'away_score_last3': r.away_score_last3,
+            'home_score_last5': r.home_score_last5,
+            'away_score_last5': r.away_score_last5,
+            'home_shoot_last1': r.home_shoot_last1,
+            'away_shoot_last1': r.away_shoot_last1,
+            'home_shoot_last3': r.home_shoot_last3,
+            'away_shoot_last3': r.away_shoot_last3,
+            'home_shoot_last5': r.home_shoot_last5,
+            'away_shoot_last5': r.away_shoot_last5,
+            'home_win_last1': r.home_win_last1,
+            'away_win_last1': r.away_win_last1,
+            'home_win_last3': r.home_win_last3,
+            'away_win_last3': r.away_win_last3,
+            'home_win_last5': r.home_win_last5,
+            'away_win_last5': r.away_win_last5,
+            'home_draw_last1': r.home_draw_last1,
+            'away_draw_last1': r.away_draw_last1,
+            'home_draw_last3': r.home_draw_last3,
+            'away_draw_last3': r.away_draw_last3,
+            'home_draw_last5': r.home_draw_last5,
+            'away_draw_last5': r.away_draw_last5,
+            'home_lost_last1': r.home_lost_last1,
+            'away_lost_last1': r.away_lost_last1,
+            'home_lost_last3': r.home_lost_last3,
+            'away_lost_last3': r.away_lost_last3,
+            'home_lost_last5': r.home_lost_last5,
+            'away_lost_last5': r.away_lost_last5,
+        })
+    return render_to_response('scraper/csv.html', {'all_data': return_data})
+
+
 def all_json(request):
     results = GameResult.all().order('game_start_at').fetch(1000)
     return_data = []
     for r in results:
         return_data.append({
+            'result': r.result,
             'series_number': r.series_number,
             'home_team': r.home_team,
             'away_team': r.away_team,
-            'teams': r.teams,
+            # 'teams': r.teams,
             'home_director': r.home_director,
             'away_director': r.away_director,
             'home_score': r.home_score,
