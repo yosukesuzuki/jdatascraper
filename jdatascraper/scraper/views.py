@@ -3,7 +3,7 @@
 import logging
 import datetime
 
-from werkzeug import Response
+# from werkzeug import Response
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 
